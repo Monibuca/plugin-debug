@@ -1,4 +1,4 @@
-module github.com/Monibuca/plugin-debug/v4
+module m7s.live/plugin/debug/v4
 
 go 1.18
 

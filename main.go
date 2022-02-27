@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "github.com/Monibuca/engine/v4"
 	_ "github.com/mkevac/debugcharts"
 	"go.uber.org/zap"
+	. "m7s.live/engine/v4"
 )
 
 type DebugConfig struct {
