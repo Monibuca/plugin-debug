@@ -8,7 +8,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	_ "github.com/mkevac/debugcharts"
 	"go.uber.org/zap"
 	. "m7s.live/engine/v4"
 )
