@@ -10,9 +10,11 @@ import (
 
 	"go.uber.org/zap"
 	. "m7s.live/engine/v4"
+	"m7s.live/engine/v4/config"
 )
 
 type DebugConfig struct {
+	config.HTTP
 }
 
 type WriteToFile struct {
@@ -25,10 +27,10 @@ func (w *WriteToFile) Header() http.Header {
 	return w.header
 }
 
-// func (w *WriteToFile) Write(p []byte) (int, error) {
-// 	// w.w.Write(p)
-// 	return w.Writer.Write(p)
-// }
+//	func (w *WriteToFile) Write(p []byte) (int, error) {
+//		// w.w.Write(p)
+//		return w.Writer.Write(p)
+//	}
 func (w *WriteToFile) WriteHeader(statusCode int) {
 	// w.w.WriteHeader(statusCode)
 }
