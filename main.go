@@ -59,6 +59,7 @@ func (p *DebugConfig) Profile(w http.ResponseWriter, r *http.Request) {
 }
 
 func (p *DebugConfig) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	r.URL.Path = "/debug" + r.URL.Path
 	pprof.Index(w, r)
 }
 
