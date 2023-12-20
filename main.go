@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"go.uber.org/zap"
 	. "m7s.live/engine/v4"
@@ -15,6 +16,7 @@ import (
 
 type DebugConfig struct {
 	config.HTTP
+	ChartPeriod time.Duration `default:"1s" desc:"图表更新周期"`
 }
 
 type WriteToFile struct {
@@ -64,3 +66,16 @@ func (p *DebugConfig) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 var plugin = InstallPlugin(&DebugConfig{})
+
+func (p *DebugConfig) Charts_(w http.ResponseWriter, r *http.Request) {
+	r.URL.Path = "/static" + strings.TrimPrefix(r.URL.Path, "/charts")
+	staticFSHandler.ServeHTTP(w, r)
+}
+
+func (p *DebugConfig) Charts_data(w http.ResponseWriter, r *http.Request) {
+	dataHandler(w, r)
+}
+
+func (p *DebugConfig) Charts_datafeed(w http.ResponseWriter, r *http.Request) {
+	s.dataFeedHandler(w, r)
+}
