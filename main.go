@@ -62,7 +62,11 @@ func (p *DebugConfig) Profile(w http.ResponseWriter, r *http.Request) {
 
 func (p *DebugConfig) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	r.URL.Path = "/debug" + r.URL.Path
-	pprof.Index(w, r)
+	if strings.Contains(r.URL.Path, "/debug/pprof/profile") {
+		pprof.Profile(w, r)
+	} else {
+		pprof.Index(w, r)
+	}
 }
 
 var plugin = InstallPlugin(&DebugConfig{})
