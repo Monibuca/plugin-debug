@@ -43,7 +43,8 @@ func (p *DebugConfig) OnEvent(event any) {
 	}
 }
 
-func (p *DebugConfig) Trace(w http.ResponseWriter, r *http.Request) {
+func (p *DebugConfig) Pprof_Trace(w http.ResponseWriter, r *http.Request) {
+	r.URL.Path = "/debug" + r.URL.Path
 	pprof.Trace(w, r)
 }
 
@@ -60,13 +61,14 @@ func (p *DebugConfig) Profile(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(strings.Join([]string{"go", "tool", "pprof", "-http :6060", ExecPath, filepath.Join(ExecDir, "cpu.profile")}, " ")))
 }
 
+func (p *DebugConfig) Pprof_profile(w http.ResponseWriter, r *http.Request) {
+	r.URL.Path = "/debug" + r.URL.Path
+	pprof.Profile(w, r)
+}
+
 func (p *DebugConfig) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	r.URL.Path = "/debug" + r.URL.Path
-	if strings.Contains(r.URL.Path, "/debug/pprof/profile") {
-		pprof.Profile(w, r)
-	} else {
-		pprof.Index(w, r)
-	}
+	pprof.Index(w, r)
 }
 
 var plugin = InstallPlugin(&DebugConfig{})
